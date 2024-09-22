@@ -2,13 +2,26 @@
 
 namespace Database\Seeders;
 
+use App\Actions\GenerateTickets;
 use App\Enums\UserRole;
 use App\Models\Address;
+use App\Models\Competition;
+use App\Models\Prize;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    /**
+     * @var GenerateTickets
+     */
+    protected GenerateTickets $generateTickets;
+
+    public function __construct()
+    {
+        $this->generateTickets = new GenerateTickets;
+    }
+
     /**
      * Seed the application's database.
      */
@@ -39,5 +52,13 @@ class DatabaseSeeder extends Seeder
                 'mobile_number' => '+4407987654321',
                 'password' => 'password',
             ]);
+            
+        $competition = Competition::factory()
+            ->has(Prize::factory(3))
+            ->create();
+
+        if ($competition) {
+            $this->generateTickets->handle($competition);
+        }
     }
 }

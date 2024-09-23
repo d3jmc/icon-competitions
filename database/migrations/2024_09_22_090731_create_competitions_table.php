@@ -47,6 +47,7 @@ return new class extends Migration
             $table->foreignId('prize_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('type');
             $table->string('status');
+            $table->timestamp('reserved_on')->nullable();
             $table->timestamp('claimed_on')->nullable();
             $table->timestamps();
             $table->softDeletes();

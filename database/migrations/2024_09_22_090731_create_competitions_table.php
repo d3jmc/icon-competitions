@@ -33,6 +33,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('competition_id')->constrained()->cascadeOnDelete();
             $table->string('name');
+            $table->float('credit')->default(0);
             $table->integer('available')->default(0);
             $table->integer('assigned')->default(0);
             $table->string('assign_to_ticket_type')->nullable();

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Enums\CompetitionStatus;
-use App\Enums\TicketType;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -24,6 +24,42 @@ class Competition extends Model
     }
 
     /**
+     * @param Builder $query
+     * @return void
+     */
+    public function scopeDraft(Builder $query): void
+    {
+        $query->where('status', CompetitionStatus::DRAFT);
+    }
+
+    /**
+     * @param Builder $query
+     * @return void
+     */
+    public function scopeScheduled(Builder $query): void
+    {
+        $query->where('status', CompetitionStatus::SCHEDULED);
+    }
+
+    /**
+     * @param Builder $query
+     * @return void
+     */
+    public function scopeActive(Builder $query): void
+    {
+        $query->where('status', CompetitionStatus::ACTIVE);
+    }
+
+    /**
+     * @param Builder $query
+     * @return void
+     */
+    public function scopeFinished(Builder $query): void
+    {
+        $query->where('status', CompetitionStatus::FINISHED);
+    }
+
+    /**
      * @return HasMany
      */
     public function prizes(): HasMany
@@ -37,13 +73,5 @@ class Competition extends Model
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class);
-    }
-
-    /**
-     * @return HasMany
-     */
-    public function instantWinTickets(): HasMany
-    {
-        return $this->tickets()->where('type', TicketType::INSTANT_WIN);
     }
 }

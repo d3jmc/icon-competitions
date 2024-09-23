@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e8c3c14ff33b199b4a0838993eb8423",
+    "content-hash": "733c75b0432d7eae99e0d87e77c60e9c",
     "packages": [
         {
             "name": "brick/math",
@@ -134,6 +134,51 @@
                 }
             ],
             "time": "2024-02-09T16:56:22+00:00"
+        },
+        {
+            "name": "d3jmc/data-transfer-object",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/d3jmc/data-transfer-object.git",
+                "reference": "b46265985b56f9e73cd9b48fe4003398f7cf4263"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/d3jmc/data-transfer-object/zipball/b46265985b56f9e73cd9b48fe4003398f7cf4263",
+                "reference": "b46265985b56f9e73cd9b48fe4003398f7cf4263",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "D3jmc\\DataTransferObject\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dom McLaughlin",
+                    "email": "dom@d3j.digital"
+                }
+            ],
+            "description": "Easily manage Data Transfer Objects in PHP.",
+            "keywords": [
+                "Data Transfer Object",
+                "dto",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/d3jmc/data-transfer-object/issues",
+                "source": "https://github.com/d3jmc/data-transfer-object"
+            },
+            "time": "2024-08-30T09:58:14+00:00"
         },
         {
             "name": "dflydev/dot-access-data",

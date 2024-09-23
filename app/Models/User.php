@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\UserRole;
 use App\Traits\HasAddress;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -16,9 +17,21 @@ class User extends Authenticatable
     use HasAddress, HasFactory, Notifiable, SoftDeletes;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
+     * @return void
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::created(function (self $model) {
+            Wallet::factory()
+                ->for($model)
+                ->create();
+        });
+    }
+
+    /**
+     * @var array
      */
     protected $fillable = [
         'name',
@@ -27,9 +40,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
+     * @var array
      */
     protected $hidden = [
         'password',
@@ -37,9 +48,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
+     * @return array
      */
     protected function casts(): array
     {
@@ -48,5 +57,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function wallet(): BelongsTo
+    {
+        return $this->belongsTo(Wallet::class);
     }
 }

@@ -11,10 +11,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
-    use HasAddress, HasFactory, Notifiable, SoftDeletes;
+    use Billable, HasAddress, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * @var array

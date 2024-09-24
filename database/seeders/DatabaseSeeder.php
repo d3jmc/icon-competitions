@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => now(),
                 'mobile_number' => '+4407123456789',
                 'password' => 'password',
+                'stripe_id' => 'cus_QuQY7wE8T5TmGp',
             ]);
 
         User::factory()
@@ -51,6 +52,7 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => now(),
                 'mobile_number' => '+4407987654321',
                 'password' => 'password',
+                'stripe_id' => 'cus_QuQY5bTiUtn92x',
             ]);
             
         $competition = Competition::factory()

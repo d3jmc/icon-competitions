@@ -44,4 +44,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * @return void
+     */
+    protected static function booted(): void
+    {
+        static::created(function (self $model) {
+            $model->createOrGetStripeCustomer();
+        });
+    }
 }

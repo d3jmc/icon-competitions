@@ -7,7 +7,7 @@ namespace App\Models;
 use App\Enums\UserRole;
 use App\Traits\HasAddress;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -15,20 +15,6 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasAddress, HasFactory, Notifiable, SoftDeletes;
-
-    /**
-     * @return void
-     */
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        static::created(function (self $model) {
-            Wallet::factory()
-                ->for($model)
-                ->create();
-        });
-    }
 
     /**
      * @var array
@@ -48,6 +34,16 @@ class User extends Authenticatable
     ];
 
     /**
+     * @return void
+     */
+    protected static function booted(): void
+    {
+        static::created(function (self $model) {
+            $model->wallet()->create();
+        });
+    }
+
+    /**
      * @return array
      */
     protected function casts(): array
@@ -60,10 +56,10 @@ class User extends Authenticatable
     }
 
     /**
-     * @return BelongsTo
+     * @return HasOne
      */
-    public function wallet(): BelongsTo
+    public function wallet(): HasOne
     {
-        return $this->belongsTo(Wallet::class);
+        return $this->hasOne(Wallet::class);
     }
 }

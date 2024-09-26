@@ -33,7 +33,7 @@ class CreditBalance extends Command
         $user = User::findOrFail($this->argument('userId'));
         
         try {
-            $user->debitBalance((int) ($this->argument('amount') * 100), $this->option('description') ?? 'Balance credited by the system');
+            $user->debitBalance((int) ($this->argument('amount') * 100), $this->option('description') ?? 'Balance debited by the system');
 
             $this->info('The user\'s balance has been debited successfully.');
         } catch (Exception $e) {

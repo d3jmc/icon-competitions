@@ -15,6 +15,18 @@ class Ticket extends Model
     use HasFactory, SoftDeletes;
 
     /**
+     * @var array
+     */
+    protected $fillable = [
+        'user_id',
+        'prize_id',
+        'type',
+        'status',
+        'reserved_on',
+        'claimed_on',
+    ];
+
+    /**
      * @return array
      */
     protected function casts(): array
@@ -77,6 +89,61 @@ class Ticket extends Model
     public function scopeVoided(Builder $query): void
     {
         $query->where('status', TicketStatus::VOIDED);
+    }
+
+    /**
+     * @param int $userId
+     * @return void
+     */
+    public function reserve(int $userId): void
+    {
+        $this->update([
+            'user_id' => $userId,
+            'status' => TicketStatus::RESERVED,
+            'reserved_on' => now(),
+        ]);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStandard(): bool
+    {
+        return ($this->type === TicketType::STANDARD);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInstantWin(): bool
+    {
+        return ($this->type === TicketType::INSTANT_WIN);
+    }
+
+    /**
+     * @return void
+     */
+    public function release(): void
+    {
+        $this->update([
+            'user_id' => null,
+            'status' => TicketStatus::UNCLAIMED,
+            'reserved_on' => null,
+            'claimed_on' => null,
+        ]);
+    }
+
+    /**
+     * @param int $userId
+     * @return void
+     */
+    public function claim(int $userId): void
+    {
+        $this->update([
+            'user_id' => $userId,
+            'status' => TicketStatus::CLAIMED,
+            'claimed_on' => now(),
+        ]);
     }
 
     /**

@@ -12,9 +12,9 @@ class ConvertTickets
     /**
      * @param Competition $competition
      * @param Closure $next
-     * @return void
+     * @return Competition
      */
-    public function handle(Competition $competition, Closure $next)
+    public function handle(Competition $competition, Closure $next): Competition
     {
         if ($numberOfInstantWinTickets = $competition->instant_wins) {
             $this->convertTo(TicketType::INSTANT_WIN, $competition->tickets->random($numberOfInstantWinTickets));

@@ -12,9 +12,9 @@ class AssignPrizesToTickets
     /**
      * @param Competition $competition
      * @param Closure $next
-     * @return void
+     * @return Competition
      */
-    public function handle(Competition $competition, Closure $next)
+    public function handle(Competition $competition, Closure $next): Competition
     {
         foreach ($competition->tickets as $ticket) {
             $attributes = [];

@@ -92,19 +92,6 @@ class Ticket extends Model
     }
 
     /**
-     * @param int $userId
-     * @return void
-     */
-    public function reserve(int $userId): void
-    {
-        $this->update([
-            'user_id' => $userId,
-            'status' => TicketStatus::RESERVED,
-            'reserved_on' => now(),
-        ]);
-    }
-
-    /**
      * @return bool
      */
     public function isStandard(): bool
@@ -118,6 +105,19 @@ class Ticket extends Model
     public function isInstantWin(): bool
     {
         return ($this->type === TicketType::INSTANT_WIN);
+    }
+
+        /**
+     * @param int $userId
+     * @return void
+     */
+    public function reserve(int $userId): void
+    {
+        $this->update([
+            'user_id' => $userId,
+            'status' => TicketStatus::RESERVED,
+            'reserved_on' => now(),
+        ]);
     }
 
     /**

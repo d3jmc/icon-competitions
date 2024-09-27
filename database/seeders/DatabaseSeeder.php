@@ -27,6 +27,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        abort_if(
+            boolean: !in_array(app()->environment(), ['local', 'testing']),
+            code: 418,
+            message: 'Never gonna let you down.',
+        );
+        
         User::factory()
             ->has(Address::factory())
             ->create([

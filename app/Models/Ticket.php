@@ -37,6 +37,46 @@ class Ticket extends Model
         ];
     }
 
+
+        /**
+     * @param int $userId
+     * @return void
+     */
+    public function reserve(int $userId): void
+    {
+        $this->update([
+            'user_id' => $userId,
+            'status' => TicketStatus::RESERVED,
+            'reserved_on' => now(),
+        ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function release(): void
+    {
+        $this->update([
+            'user_id' => null,
+            'status' => TicketStatus::UNCLAIMED,
+            'reserved_on' => null,
+            'claimed_on' => null,
+        ]);
+    }
+
+    /**
+     * @param int $userId
+     * @return void
+     */
+    public function claim(int $userId): void
+    {
+        $this->update([
+            'user_id' => $userId,
+            'status' => TicketStatus::CLAIMED,
+            'claimed_on' => now(),
+        ]);
+    }
+
     /**
      * @param Builder $query
      * @return void
@@ -105,45 +145,6 @@ class Ticket extends Model
     public function isInstantWin(): bool
     {
         return ($this->type === TicketType::INSTANT_WIN);
-    }
-
-        /**
-     * @param int $userId
-     * @return void
-     */
-    public function reserve(int $userId): void
-    {
-        $this->update([
-            'user_id' => $userId,
-            'status' => TicketStatus::RESERVED,
-            'reserved_on' => now(),
-        ]);
-    }
-
-    /**
-     * @return void
-     */
-    public function release(): void
-    {
-        $this->update([
-            'user_id' => null,
-            'status' => TicketStatus::UNCLAIMED,
-            'reserved_on' => null,
-            'claimed_on' => null,
-        ]);
-    }
-
-    /**
-     * @param int $userId
-     * @return void
-     */
-    public function claim(int $userId): void
-    {
-        $this->update([
-            'user_id' => $userId,
-            'status' => TicketStatus::CLAIMED,
-            'claimed_on' => now(),
-        ]);
     }
 
     /**

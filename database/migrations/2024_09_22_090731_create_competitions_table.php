@@ -17,7 +17,9 @@ return new class extends Migration
             $table->longText('description');
             $table->string('thumbnail');
             $table->timestamp('start_date');
+            $table->timestamp('started_on')->nullable();
             $table->timestamp('end_date');
+            $table->timestamp('ended_on')->nullable();
             $table->float('ticket_price');
             $table->integer('min_tickets');
             $table->integer('max_tickets');

@@ -3,6 +3,7 @@
 namespace App\Pipelines\TicketPurchasing;
 
 use App\DTOs\PurchaseTicketsDto;
+use App\Events\TicketsPurchased;
 use Closure;
 
 class ClaimTickets
@@ -17,6 +18,8 @@ class ClaimTickets
         foreach ($dto->tickets as $ticket) {
             $ticket->claim($ticket->user_id);
         }
+
+        event(new TicketsPurchased($dto->user, $dto->tickets));
 
         return $next($dto);
     }

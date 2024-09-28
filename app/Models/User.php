@@ -50,8 +50,10 @@ class User extends Authenticatable
      */
     protected static function booted(): void
     {
-        static::created(function (self $model) {
-            $model->createOrGetStripeCustomer();
+        static::updated(function (self $model) {
+            if ($model->email_verified_at && !$model->stripe_id) {
+                $model->createOrGetStripeCustomer();
+            }
         });
     }
 }

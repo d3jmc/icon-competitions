@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('min_tickets_per_user')->default(1);
             $table->integer('max_tickets_per_user')->default(-1);
             $table->integer('instant_wins')->default(0);
+            $table->boolean('choose_winner')->default(false);
             $table->string('status');
             $table->timestamps();
             $table->softDeletes();

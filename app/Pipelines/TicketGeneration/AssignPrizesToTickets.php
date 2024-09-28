@@ -5,6 +5,7 @@ namespace App\Pipelines\TicketGeneration;
 use App\Enums\TicketType;
 use App\Models\Competition;
 use App\Models\Prize;
+use App\Models\Ticket;
 use Closure;
 
 class AssignPrizesToTickets
@@ -16,7 +17,7 @@ class AssignPrizesToTickets
      */
     public function handle(Competition $competition, Closure $next): Competition
     {
-        foreach ($competition->tickets as $ticket) {
+        $competition->tickets->each(function (Ticket $ticket) use ($competition) {
             $attributes = [];
 
             if ($prize = $this->getPrize($competition, $ticket->type)) {
@@ -26,7 +27,7 @@ class AssignPrizesToTickets
             }
 
             $ticket->update($attributes);
-        }
+        });
 
         return $next($competition);
     }

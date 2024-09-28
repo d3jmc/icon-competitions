@@ -32,9 +32,7 @@ class ReserveTickets
 
         $randomTickets = $unclaimedTickets->random($dto->amount);
 
-        foreach ($randomTickets as $randomTicket) {
-            $randomTicket->reserve($dto->user->id);
-        }
+        $randomTickets->each->reserve($dto->user->id);
  
         $dto->fill([
             'tickets' => $randomTickets,

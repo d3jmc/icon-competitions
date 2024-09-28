@@ -30,10 +30,6 @@ class ConvertTickets
      */
     private function convertTo(TicketType $ticketType, Collection $tickets): void
     {
-        foreach ($tickets as $ticket) {
-            $ticket->update([
-                'type' => $ticketType,
-            ]);
-        }
+        $tickets->each->update(['type' => $ticketType]);
     }
 }

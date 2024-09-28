@@ -4,6 +4,7 @@ namespace App\Pipelines\TicketPurchasing;
 
 use App\DTOs\PurchaseTicketsDto;
 use App\Events\TicketsPurchased;
+use App\Models\Ticket;
 use Closure;
 
 class ClaimTickets
@@ -15,9 +16,7 @@ class ClaimTickets
      */
     public function handle(PurchaseTicketsDto $dto, Closure $next): PurchaseTicketsDto
     {
-        foreach ($dto->tickets as $ticket) {
-            $ticket->claim($ticket->user_id);
-        }
+        $dto->tickets->each(fn(Ticket $ticket) => $ticket->claim($ticket->user_id));
 
         event(new TicketsPurchased($dto->user, $dto->tickets));
 

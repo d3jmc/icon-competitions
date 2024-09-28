@@ -23,7 +23,7 @@ class CompetitionFactory extends Factory
             'thumbnail' => 'https://placehold.it/100x100',
             'start_date' => now()->addHour(),
             'end_date' => now()->addDay(14),
-            'ticket_price' => fake()->randomFloat(2, 0, 10),
+            'ticket_price' => fake()->randomFloat(2, 0, 2),
             'min_tickets' => 1,
             'max_tickets' => fake()->numberBetween(1, 100),
             'min_tickets_per_user' => 1,

@@ -2,7 +2,7 @@
 
 namespace App\Pipelines\TicketPurchasing;
 
-use App\DTOs\PurchaseTicketsDto;
+use App\Dtos\PurchaseTicketsDto;
 use App\Exceptions\NotEnoughTicketsRequestedException;
 use App\Exceptions\TooManyTicketsRequestedException;
 use Closure;

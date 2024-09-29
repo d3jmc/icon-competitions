@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTOs;
+namespace App\Dtos;
 
 use App\Models\Competition;
 use App\Models\User;

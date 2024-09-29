@@ -2,7 +2,7 @@
 
 namespace App\Actions;
 
-use App\DTOs\PurchaseTicketsDto;
+use App\Dtos\PurchaseTicketsDto;
 use App\Models\Competition;
 use App\Models\User;
 use App\Pipelines\TicketPurchasing\CheckUserBalance;

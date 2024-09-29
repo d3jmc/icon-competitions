@@ -2,7 +2,7 @@
 
 namespace App\Pipelines\TicketPurchasing;
 
-use App\DTOs\PurchaseTicketsDto;
+use App\Dtos\PurchaseTicketsDto;
 use App\Events\TicketsPurchased;
 use App\Models\Ticket;
 use Closure;

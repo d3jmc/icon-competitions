@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Honorific;
 use App\Enums\UserRole;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,7 +16,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('role')->default(UserRole::MEMBER->value);
-            $table->string('prefix');
+            $table->string('prefix')->default(Honorific::OTHER->value);
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');

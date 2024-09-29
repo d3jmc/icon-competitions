@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
+use App\Enums\Honorific;
 use App\Enums\UserRole;
 use App\Traits\HasAddress;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Billable, HasAddress, HasFactory, Notifiable, SoftDeletes;
 
@@ -20,8 +20,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'prefix',
+        'first_name',
+        'middle_name',
+        'last_name',
         'email',
+        'mobile_number',
         'password',
     ];
 
@@ -39,6 +43,7 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            'prefix' => Honorific::class,
             'role' => UserRole::class,
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
@@ -51,7 +56,7 @@ class User extends Authenticatable
     protected static function booted(): void
     {
         static::updated(function (self $model) {
-            if ($model->email_verified_at && !$model->stripe_id) {
+            if ($model->hasVerifiedEmail() && !$model->stripe_id) {
                 $model->createOrGetStripeCustomer();
             }
         });

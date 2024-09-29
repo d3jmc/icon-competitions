@@ -45,10 +45,10 @@ class extends Component
     
     <form wire:submit="sendPasswordResetLink" class="flex flex-col gap-4">
         <div>
-            <x-input-label for="email" :value="__('Email')" />
+            <x-input-label for="email" :value="'Email'" />
             <x-input wire:model="email" id="email" type="email" required />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
-        <x-button>{{ __('Email Password Reset Link') }}</x-button>
+        <x-button>{{ 'Email Password Reset Link' }}</x-button>
     </form>
 </div>

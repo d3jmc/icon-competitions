@@ -81,33 +81,35 @@ class extends Component
 ?>
 
 <div class="flex flex-col gap-8">
-    <x-page-header title="Log in" subtitle="Access your profile." />
+    <x-page-header title="Log in" subtitle="Access your account." />
 
     <form wire:submit="login" class="flex flex-col gap-4">
         <div>
-            <x-input wire:model="email" id="email" type="email" :placeholder="__('Email')" required />
+            <x-input-label for="email" value="Email" />
+            <x-input wire:model="email" id="email" type="email" required />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
         <div>
-            <x-input wire:model="password" id="password" type="password" :placeholder="__('Password')" required />
+            <x-input-label for="password" value="Password" />
+            <x-input wire:model="password" id="password" type="password" required />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
         <div>
             <label for="remember" class="inline-flex items-center gap-2">
                 <input wire:model="remember" id="remember" type="checkbox" class="w-auto" />
-                <span class="text-sm">{{ __('Remember me') }}</span>
+                <span class="text-sm">Remember me</span>
             </label>
         </div>
-        <x-button>{{ __('Log in') }}</x-button>
+        <x-button>Log in</x-button>
     </form>
 
     <div class="flex justify-center gap-4">
         @if (Route::has('password.request'))
-            <a href="{{ route('password.request') }}" wire:navigate>{{ __('Forgot password?') }}</a>
+            <a href="{{ route('password.request') }}" wire:navigate>Forgot password?</a>
         @endif
 
         @if (Route::has('register'))
-            <a href="{{ route('register') }}" wire:navigate>{{ __('Create an account') }}</a>
+            <a href="{{ route('register') }}" wire:navigate>Create an account</a>
         @endif
     </div>
 </div>

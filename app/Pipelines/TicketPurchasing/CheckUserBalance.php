@@ -16,7 +16,7 @@ class CheckUserBalance
     public function handle(PurchaseTicketsDto $dto, Closure $next): PurchaseTicketsDto
     {
         if ($dto->user->rawBalance() < $dto->totalPriceForStripe) {
-            throw new InsufficientFundsException(__('Insufficient funds. Please top-up your wallet to continue.'));
+            throw new InsufficientFundsException('Insufficient funds. Please top-up your wallet to continue.');
         }
 
         return $next($dto);

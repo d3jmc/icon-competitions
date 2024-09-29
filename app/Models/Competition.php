@@ -50,7 +50,7 @@ class Competition extends Model
     public function start(bool $force = false): void
     {
         if (!$force && $this->status !== CompetitionStatus::SCHEDULED) {
-            throw new HandleCompetitionException(__('The competition must be scheduled before starting.'));
+            throw new HandleCompetitionException('The competition must be scheduled before starting.');
         }
 
         $this->update([
@@ -68,7 +68,7 @@ class Competition extends Model
     public function end(bool $force = false): void
     {
         if (!$force && $this->status !== CompetitionStatus::ACTIVE) {
-            throw new HandleCompetitionException(__('The competition must be active before ending.'));
+            throw new HandleCompetitionException('The competition must be active before ending.');
         }
 
         $this->update([

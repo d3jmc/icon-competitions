@@ -6,7 +6,7 @@ use Livewire\Volt\Component;
 
 new
 #[Layout('layouts.app')]
-#[Title('Account')]
+#[Title('Past Competitions')]
 class extends Component
 {
 
@@ -14,5 +14,5 @@ class extends Component
 ?>
 
 <div>
-    account
+    past competitions page
 </div>

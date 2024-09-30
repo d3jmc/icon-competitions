@@ -61,12 +61,10 @@ class DatabaseSeeder extends Seeder
                 'stripe_id' => 'cus_QuQY5bTiUtn92x',
             ]);
             
-        $competition = Competition::factory()
+        Competition::factory()
+            ->count(3)
             ->has(Prize::factory(3))
-            ->create();
-
-        if ($competition) {
-            $this->generateTickets->handle($competition);
-        }
+            ->create()
+            ->each(fn(Competition $competition) => $this->generateTickets->handle($competition));
     }
 }

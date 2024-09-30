@@ -28,7 +28,7 @@ class PrizeFactory extends Factory
             'credit' => function (array $attributes) use ($prizes) {
                 return $prizes[$attributes['name']] ?? 0;
             },
-            'available' => fake()->numberBetween(1, 10),
+            'available' => fake()->numberBetween(1, 1000),
             'assign_to_ticket_type' => TicketType::INSTANT_WIN,
         ];
     }

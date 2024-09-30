@@ -15,7 +15,11 @@
     <body class="font-body">
         <div class="grid xl:grid-cols-2 min-h-screen">
             <div class="h-full bg-white container">
-                <x-application-logo />
+                <div class="py-4">
+                    <a class="flex" href="{{ route('home') }}" wire:navigate>
+                        <x-application-logo />
+                    </a>
+                </div>
 
                 <div class="flex flex-col justify-center gap-8 max-w-[480px] min-h-[calc(100%-136px)] py-20 mx-auto">
                     <x-session-message :message="session('message')" />

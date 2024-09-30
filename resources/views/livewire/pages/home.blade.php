@@ -11,7 +11,10 @@ new
 #[Title('Home')]
 class extends Component
 {
-    public ?Collection $competitions = null;
+    /**
+     * @var Collection
+     */
+    public Collection $competitions;
 
     /**
      * @return void

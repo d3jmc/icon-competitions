@@ -9,6 +9,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
         <title>{{ $title ?? '' }} | Icon Competitions</title>
+        
+        @wireUiScripts
 
         @vite('resources/css/app.css')
     </head>
@@ -22,7 +24,9 @@
                 </div>
 
                 <div class="flex flex-col justify-center gap-8 max-w-[480px] min-h-[calc(100%-136px)] py-20 mx-auto">
-                    <x-session-message :message="session('message')" />
+                    @if (session('message'))
+                        <x-alert :title="session('message')" positive />
+                    @endif
 
                     {{ $slot }}
                 </div>

@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Log;
 class TicketsPurchasedListener
 {
     /**
-     * Handle the event.
+     * @param  TicketsPurchased $event
+     *
+     * @return void
      */
     public function handle(TicketsPurchased $event): void
     {

@@ -11,7 +11,8 @@ use Illuminate\Pipeline\Pipeline;
 class GenerateTickets
 {
     /**
-     * @param Competition $competition
+     * @param  Competition $competition
+     *
      * @return Competition
      */
     public function handle(Competition $competition): Competition

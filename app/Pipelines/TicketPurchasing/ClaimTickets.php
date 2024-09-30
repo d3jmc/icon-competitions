@@ -10,13 +10,16 @@ use Closure;
 class ClaimTickets
 {
     /**
-     * @param PurchaseTicketsDto $dto
-     * @param Closure $next
+     * Undocumented function
+     *
+     * @param  PurchaseTicketsDto $dto
+     * @param  Closure            $next
+     *
      * @return PurchaseTicketsDto
      */
     public function handle(PurchaseTicketsDto $dto, Closure $next): PurchaseTicketsDto
     {
-        $dto->tickets->each(fn(Ticket $ticket) => $ticket->claim($ticket->user_id));
+        $dto->tickets->each(fn (Ticket $ticket) => $ticket->claim($ticket->user_id));
 
         event(new TicketsPurchased($dto->user, $dto->tickets));
 

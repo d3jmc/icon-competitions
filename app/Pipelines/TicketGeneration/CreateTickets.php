@@ -9,8 +9,9 @@ use Closure;
 class CreateTickets
 {
     /**
-     * @param Competition $competition
-     * @param Closure $next
+     * @param  Competition $competition
+     * @param  Closure     $next
+     *
      * @return Competition
      */
     public function handle(Competition $competition, Closure $next): Competition

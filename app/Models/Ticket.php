@@ -37,9 +37,9 @@ class Ticket extends Model
         ];
     }
 
-
-        /**
-     * @param int $userId
+    /**
+     * @param  int  $userId
+     *
      * @return void
      */
     public function reserve(int $userId): void
@@ -65,7 +65,8 @@ class Ticket extends Model
     }
 
     /**
-     * @param int $userId
+     * @param  int  $userId
+     *
      * @return void
      */
     public function claim(int $userId): void
@@ -78,7 +79,8 @@ class Ticket extends Model
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder $query
+     *
      * @return void
      */
     public function scopeStandard(Builder $query): void
@@ -87,7 +89,8 @@ class Ticket extends Model
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder $query
+     *
      * @return void
      */
     public function scopeInstantWin(Builder $query): void
@@ -96,7 +99,8 @@ class Ticket extends Model
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder $query
+     *
      * @return void
      */
     public function scopeUnclaimed(Builder $query): void
@@ -105,7 +109,8 @@ class Ticket extends Model
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder $query
+     *
      * @return void
      */
     public function scopeReserved(Builder $query): void
@@ -114,7 +119,8 @@ class Ticket extends Model
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder $query
+     *
      * @return void
      */
     public function scopeClaimed(Builder $query): void
@@ -123,7 +129,8 @@ class Ticket extends Model
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder $query
+     *
      * @return void
      */
     public function scopeVoided(Builder $query): void

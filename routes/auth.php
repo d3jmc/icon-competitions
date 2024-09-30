@@ -1,6 +1,6 @@
 <?php
 
-use App\Actions\Logout;
+use App\Actions\Auth\Logout;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -24,8 +24,8 @@ Route::middleware('auth')->group(function () {
         return redirect()->intended(route('account'));
     })->name('verification.verify');
 
-    Route::get('logout', function (Logout $logout) {
-        $logout();
+    Route::get('logout', function () {
+        (new Logout)->handle();
 
         return redirect()->intended(route('login'));
     })->name('logout');

@@ -24,7 +24,8 @@ class Prize extends Model
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder $query
+     *
      * @return void
      */
     public function scopeAssignable(Builder $query): void
@@ -33,8 +34,9 @@ class Prize extends Model
     }
 
     /**
-     * @param Builder $query
-     * @param TicketType $ticketType
+     * @param  Builder    $query
+     * @param  TicketType $ticketType
+     *
      * @return void
      */
     public function scopeForTicketType(Builder $query, TicketType $ticketType): void

@@ -1,8 +1,7 @@
 <?php
 
+use App\Actions\Auth\Register;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
@@ -41,11 +40,7 @@ class extends Component
      */
     public function register(): void
     {
-        $validated = $this->validate();
-
-        event(new Registered($user = User::create($validated)));
-
-        Auth::login($user);
+        (new Register)->handle($this->validate());
 
         $this->redirectIntended(default: route('account', absolute: false), navigate: true);
     }
@@ -55,59 +50,23 @@ class extends Component
 <div class="flex flex-col gap-8">
     <x-page-header title="Create an account" subtitle="Manage your profile, enter competitions and claim prizes." />
 
+    <x-errors />
+
     <form wire:submit="register" class="flex flex-col gap-4">
-        <div>
-            <x-input-label for="prefix" value="Title" />
-            <x-select wire:model.change="prefix" id="prefix" :options="\App\Enums\Honorific::cases()" required />
-            <x-input-error :messages="$errors->get('prefix')" class="mt-2" />
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-            <div>
-                <x-input-label for="first_name" value="First Name" />
-                <x-input wire:model="first_name" id="first_name" type="text" required />
-                <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
-            </div>
-            <div>
-                <x-input-label for="last_name" value="Last Name" />
-                <x-input wire:model="last_name" id="last_name" type="text" required />
-                <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
-            </div>
-        </div>
-        <div>
-            <x-input-label for="email" value="Email" />
-            <x-input wire:model="email" id="email" type="email" required />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-        <div>
-            <x-input-label for="mobile_number" value="Mobile Number" />
-            <x-input wire:model="mobile_number" id="mobile_number" type="text" required />
-            <x-input-error :messages="$errors->get('mobile_number')" class="mt-2" />
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-            <div>
-                <x-input-label for="password" value="Password" />
-                <x-input wire:model="password" id="password" type="password" required />
-                <x-input-error :messages="$errors->get('password')" class="mt-2" />
-            </div>
-            <div>
-                <x-input-label for="password_confirmation" value="Confirm Password" />
-                <x-input wire:model="password_confirmation" id="password_confirmation" type="password" required />
-                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-            </div>
-        </div>
-        <div>
-            <label for="terms" class="inline-flex items-center gap-2">
-                <input wire:model="terms" id="terms" type="checkbox" class="w-auto" required />
-                <span class="text-sm">I agree to the terms and conditions and privacy policy.</span>
-            </label>
-            <x-input-error :messages="$errors->get('terms')" class="mt-2" />
-        </div>
-        <x-button>Register</x-button>
+        <x-native-select wire:model="prefix" label="Title" placeholder="Please choose" :options="\App\Enums\Honorific::cases()" option-label="value" option-value="value" required />
+        <x-input wire:model="first_name" type="text" label="First Name" required />
+        <x-input wire:model="last_name" type="text" label="Last Name" required />
+        <x-input wire:model="email" type="email" label="Email" required />
+        <x-input wire:model="mobile_number" type="text" label="Mobile Number" required />
+        <x-input wire:model="password" type="password" label="Password" required />
+        <x-input wire:model="password_confirmation" type="password" label="Confirm Password" required />
+        <x-checkbox wire:model="terms" label="I agree to the terms and conditions and privacy policy." required />
+        <x-button type="submit">Register</x-button>
     </form>
 
     <div class="flex justify-center gap-4">
         @if (Route::has('login'))
-            <a href="{{ route('login') }}" wire:navigate>Already have an account?</a>
+            <x-link wire:navigate label="Already have an account?" href="{{ route('login') }}" />
         @endif
     </div>
 </div>

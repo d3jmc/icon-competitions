@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Auth\SendPasswordResetLink;
 use Illuminate\Support\Facades\Password;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -21,10 +22,10 @@ class extends Component
     {
         $this->validate();
 
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
-        $status = Password::sendResetLink($this->only('email'));
+        $action = new SendPasswordResetLink();
+        $action->handle($this->email);
+
+        $status = $action->getStatus();
 
         if ($status !== Password::RESET_LINK_SENT) {
             $this->addError('email', __($status));
@@ -41,14 +42,14 @@ class extends Component
 <div class="flex flex-col gap-8">
     <x-page-header title="Forgot Password" subtitle="Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one." />
     
-    <x-session-message :message="session('message')" />
+    @if (session('message'))
+        <x-alert :title="session('message')" positive />
+    @endif
+
+    <x-errors />
     
     <form wire:submit="sendPasswordResetLink" class="flex flex-col gap-4">
-        <div>
-            <x-input-label for="email" :value="'Email'" />
-            <x-input wire:model="email" id="email" type="email" required />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-        <x-button>{{ 'Email Password Reset Link' }}</x-button>
+        <x-input wire:model="email" type="email" label="Email" required />
+        <x-button type="submit" label="Email password reset link" />
     </form>
 </div>

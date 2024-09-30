@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Auth\ResetPassword;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Session;
@@ -44,24 +45,11 @@ class extends Component
     {
         $this->validate();
 
-        // Here we will attempt to reset the user's password. If it is successful we
-        // will update the password on an actual user model and persist it to the
-        // database. Otherwise we will parse the error and return the response.
-        $status = Password::reset(
-            $this->only('email', 'password', 'token'),
-            function ($user) {
-                $user->forceFill([
-                    'password' => $this->password,
-                    'remember_token' => Str::random(60),
-                ])->save();
+        $action = new ResetPassword();
+        $action->handle($this->email, $this->password, $this->token);
 
-                event(new PasswordReset($user));
-            }
-        );
+        $status = $action->getStatus();
 
-        // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
-        // redirect them back to where they came from with their error message.
         if ($status !== Password::PASSWORD_RESET) {
             $this->addError('email', __($status));
             return;
@@ -77,22 +65,16 @@ class extends Component
 <div class="flex flex-col gap-8">
     <x-page-header title="Reset Password" subtitle="Fill in the fields below to reset your password." />
 
+    @if (session('message'))
+        <x-alert :title="session('message')" positive />
+    @endif
+
+    <x-errors />
+
     <form wire:submit="resetPassword" class="flex flex-col gap-4">
-        <div>
-            <x-input-label for="email" value="Email" />
-            <x-input wire:model="email" id="email" type="email" disabled readonly required />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-        <div>
-            <x-input-label for="password" value="Password" />
-            <x-input wire:model="password" id="password" type="password" required />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-        <div>
-            <x-input-label for="password_confirmation" value="Confirm Password" />
-            <x-input wire:model="password_confirmation" id="password_confirmation" type="password" required />
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-        <x-button>Reset Password</x-button>
+        <x-input wire:model="email" type="email" label="Email" disabled readonly required />
+        <x-input wire:model="password" type="password" label="Password" required />
+        <x-input wire:model="password_confirmation" type="password" label="Confirm Password" required />
+        <x-button type="submit" label="Reset password" />
     </form>
 </div>

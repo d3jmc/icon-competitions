@@ -8,8 +8,9 @@ use Closure;
 class TakePayment
 {
     /**
-     * @param PurchaseTicketsDto $dto
-     * @param Closure $next
+     * @param  PurchaseTicketsDto $dto
+     * @param  Closure            $next
+     *
      * @return PurchaseTicketsDto
      */
     public function handle(PurchaseTicketsDto $dto, Closure $next): PurchaseTicketsDto

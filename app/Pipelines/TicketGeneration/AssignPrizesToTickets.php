@@ -11,33 +11,43 @@ use Closure;
 class AssignPrizesToTickets
 {
     /**
-     * @param Competition $competition
-     * @param Closure $next
+     * @param  Competition $competition
+     * @param  Closure     $next
+     *
      * @return Competition
      */
     public function handle(Competition $competition, Closure $next): Competition
     {
-        $competition->tickets->each(function (Ticket $ticket) use ($competition) {
-            $attributes = [];
-
-            if ($prize = $this->getPrize($competition, $ticket->type)) {
-                $attributes['prize_id'] = $prize->id;
-            } else {
-                $attributes['type'] = TicketType::STANDARD;
-            }
-
-            $ticket->update($attributes);
-        });
+        $competition->tickets->each(fn (Ticket $ticket) => $this->assignPrize($ticket));
 
         return $next($competition);
     }
 
     /**
-     * @param Competition $competition
-     * @param TicketType $ticketType
+     * @param  Ticket $ticket
+     *
+     * @return void
+     */
+    private function assignPrize(Ticket $ticket): void
+    {
+        $attributes = [];
+
+        if ($prize = $this->getRandomPrize($ticket->competition, $ticket->type)) {
+            $attributes['prize_id'] = $prize->id;
+        } else {
+            $attributes['type'] = TicketType::STANDARD;
+        }
+
+        $ticket->update($attributes);
+    }
+
+    /**
+     * @param  Competition $competition
+     * @param  TicketType  $ticketType
+     *
      * @return Prize|null
      */
-    private function getPrize(Competition $competition, TicketType $ticketType): ?Prize
+    private function getRandomPrize(Competition $competition, TicketType $ticketType): ?Prize
     {
         $prizes = $competition
             ->prizes()

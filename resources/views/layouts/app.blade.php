@@ -10,6 +10,8 @@
 
         <title>{{ $title ?? '' }} | Icon Competitions</title>
 
+        @wireUiScripts
+
         @vite('resources/css/app.css')
     </head>
     <body class="font-body bg-primary text-white">

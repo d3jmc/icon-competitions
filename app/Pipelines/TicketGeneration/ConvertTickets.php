@@ -10,8 +10,9 @@ use Illuminate\Database\Eloquent\Collection;
 class ConvertTickets
 {
     /**
-     * @param Competition $competition
-     * @param Closure $next
+     * @param  Competition $competition
+     * @param  Closure     $next
+     *
      * @return Competition
      */
     public function handle(Competition $competition, Closure $next): Competition
@@ -24,8 +25,9 @@ class ConvertTickets
     }
 
     /**
-     * @param TicketType $ticketType
-     * @param Collection $tickets
+     * @param  TicketType $ticketType
+     * @param  Collection $tickets
+     *
      * @return void
      */
     private function convertTo(TicketType $ticketType, Collection $tickets): void

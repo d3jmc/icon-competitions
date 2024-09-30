@@ -14,9 +14,10 @@ use Illuminate\Pipeline\Pipeline;
 class PurchaseTickets
 {
     /**
-     * @param User $user
-     * @param Competition $competition
-     * @param int $amount
+     * @param  User         $user
+     * @param  Competition  $competition
+     * @param  int          $amount
+     *
      * @return PurchaseTicketsDto
      */
     public function handle(User $user, Competition $competition, int $amount): PurchaseTicketsDto

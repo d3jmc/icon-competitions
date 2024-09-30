@@ -10,9 +10,9 @@
         "laravel/cashier": "^15.4",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
-        "livewire/flux": "^1.0",
         "livewire/livewire": "^3.5",
-        "livewire/volt": "^1.6"
+        "livewire/volt": "^1.6",
+        "wireui/wireui": "^2.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",

@@ -44,7 +44,8 @@ class Competition extends Model
     }
 
     /**
-     * @param bool $force
+     * @param  bool $force
+     *
      * @return void
      */
     public function start(bool $force = false): void
@@ -62,7 +63,8 @@ class Competition extends Model
     }
 
     /**
-     * @param bool $force
+     * @param  bool $force
+     *
      * @return void
      */
     public function end(bool $force = false): void
@@ -80,7 +82,8 @@ class Competition extends Model
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder $query
+     *
      * @return void
      */
     public function scopeDraft(Builder $query): void
@@ -89,7 +92,8 @@ class Competition extends Model
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder $query
+     *
      * @return void
      */
     public function scopeScheduled(Builder $query): void
@@ -98,7 +102,8 @@ class Competition extends Model
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder $query
+     *
      * @return void
      */
     public function scopeActive(Builder $query): void
@@ -107,7 +112,8 @@ class Competition extends Model
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder $query
+     *
      * @return void
      */
     public function scopeFinished(Builder $query): void

@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Log;
 class CompetitionEndedListener
 {
     /**
-     * Handle the event.
+     * @param  CompetitionEnded $event
+     *
+     * @return void
      */
     public function handle(CompetitionEnded $event): void
     {

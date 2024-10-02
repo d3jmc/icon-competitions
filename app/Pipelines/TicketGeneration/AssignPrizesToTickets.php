@@ -49,11 +49,7 @@ class AssignPrizesToTickets
      */
     private function getRandomPrize(Competition $competition, TicketType $ticketType): ?Prize
     {
-        $prizes = $competition
-            ->prizes()
-            ->assignable()
-            ->forTicketType($ticketType)
-            ->get();
+        $prizes = $competition->prizes()->assignable()->forTicketType($ticketType)->get();
         
         if ($prizes->count() == 0) {
             return null;

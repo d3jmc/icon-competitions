@@ -13,7 +13,7 @@ class EndCompetitions extends Command
      *
      * @var string
      */
-    protected $signature = 'competition:end {ids?}';
+    protected $signature = 'competition:end {--ids=}';
 
     /**
      * The console command description.
@@ -29,25 +29,15 @@ class EndCompetitions extends Command
      */
     public function handle(): void
     {
-        $query = Competition::active()->where('end_date', '<=', now());
+        $ids = $this->option('ids') ? explode(',', $this->option('ids')) : [];
 
-        if ($ids = explode(',', $this->argument('ids'))) {
-            $query->whereIn('id', $ids);
-        }
-
-        $competitions = $query->with('count')->get();
-        $count = $competitions->count();
-
-        if ($count > 0) {
-            foreach ($competitions as $competition) {
-                dispatch(new EndCompetition($competition));
-            }
-
-            $this->info("Ending {$count} competitions.");
-
-            return;
-        }
-
-        $this->error('There are no competitions ready to end.');
+        Competition::query()
+            ->when(!empty($ids), function ($query) use ($ids) {
+                return $query->whereIn('id', $ids);
+            })
+            ->active()
+            ->pastEndDate()
+            ->get()
+            ->each(fn (Competition $competition) => dispatch(new EndCompetition($competition)));
     }
 }

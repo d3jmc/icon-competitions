@@ -13,7 +13,7 @@ class StartCompetitions extends Command
      *
      * @var string
      */
-    protected $signature = 'competition:start {ids?}';
+    protected $signature = 'competition:start {--ids=?}';
 
     /**
      * The console command description.
@@ -29,25 +29,15 @@ class StartCompetitions extends Command
      */
     public function handle(): void
     {
-        $query = Competition::scheduled()->where('start_date', '<=', now());
+        $ids = $this->option('ids') ? explode(',', $this->option('ids')) : [];
 
-        if ($ids = explode(',', $this->argument('ids'))) {
-            $query->whereIn('id', $ids);
-        }
-
-        $competitions = $query->with('count')->get();
-        $count = $competitions->count();
-
-        if ($count > 0) {
-            foreach ($competitions as $competition) {
-                dispatch(new StartCompetition($competition));
-            }
-
-            $this->info("Starting {$count} competitions.");
-
-            return;
-        }
-
-        $this->error('There are no competitions ready to start.');
+        Competition::query()
+            ->when(!empty($ids), function ($query) use ($ids) {
+                return $query->whereIn('id', $ids);
+            })
+            ->scheduled()
+            ->pastStartDate()
+            ->get()
+            ->each(fn (Competition $competition) => dispatch(new StartCompetition($competition)));
     }
 }

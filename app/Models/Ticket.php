@@ -79,6 +79,22 @@ class Ticket extends Model
     }
 
     /**
+     * @return bool
+     */
+    public function isStandard(): bool
+    {
+        return ($this->type === TicketType::STANDARD);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInstantWin(): bool
+    {
+        return ($this->type === TicketType::INSTANT_WIN);
+    }
+
+    /**
      * @param  Builder $query
      *
      * @return void
@@ -136,22 +152,6 @@ class Ticket extends Model
     public function scopeVoided(Builder $query): void
     {
         $query->where('status', TicketStatus::VOIDED);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isStandard(): bool
-    {
-        return ($this->type === TicketType::STANDARD);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isInstantWin(): bool
-    {
-        return ($this->type === TicketType::INSTANT_WIN);
     }
 
     /**

@@ -44,13 +44,11 @@ class Competition extends Model
     }
 
     /**
-     * @param  bool $force
-     *
      * @return void
      */
-    public function start(bool $force = false): void
+    public function start(): void
     {
-        if (!$force && $this->status !== CompetitionStatus::SCHEDULED) {
+        if ($this->status !== CompetitionStatus::SCHEDULED) {
             throw new HandleCompetitionException('The competition must be scheduled before starting.');
         }
 
@@ -63,13 +61,11 @@ class Competition extends Model
     }
 
     /**
-     * @param  bool $force
-     *
      * @return void
      */
-    public function end(bool $force = false): void
+    public function end(): void
     {
-        if (!$force && $this->status !== CompetitionStatus::ACTIVE) {
+        if ($this->status !== CompetitionStatus::ACTIVE) {
             throw new HandleCompetitionException('The competition must be active before ending.');
         }
 
@@ -119,6 +115,26 @@ class Competition extends Model
     public function scopeFinished(Builder $query): void
     {
         $query->where('status', CompetitionStatus::FINISHED);
+    }
+
+    /**
+     * @param  Builder $query
+     *
+     * @return void
+     */
+    public function scopePastStartDate(Builder $query): void
+    {
+        $query->where('start_date', '<=', now());
+    }
+
+    /**
+     * @param  Builder $query
+     *
+     * @return void
+     */
+    public function scopePastEndDate(Builder $query): void
+    {
+        $query->where('end_date', '<=', now());
     }
 
     /**

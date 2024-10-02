@@ -27,7 +27,7 @@ class ResetPassword
                 'email' => $email,
                 'password' => $password,
                 'password_confirmation' => $password,
-                'token' => $token
+                'token' => $token,
             ],
             function ($user) use ($password) {
                 $user->forceFill([

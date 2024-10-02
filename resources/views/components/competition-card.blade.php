@@ -1,6 +1,6 @@
 @props(['competition'])
 
-<div class="border border-primary-800 rounded">
+<div class="border border-gray-500 rounded">
     <div class="flex flex-col gap-4 p-8">
         <div class="max-w-[250px] py-2 px-4 mx-auto -mt-[55px] font-medium text-center bg-secondary text-primary rounded">{{ \Carbon\Carbon::parse($competition->start_date)->format('D d M') }} - {{ \Carbon\Carbon::parse($competition->end_date)->format('D d M') }}</div>
         <img src="//placehold.it/500x500" alt="" class="rounded" />
@@ -18,9 +18,9 @@
                 <div class="p-2 text-center bg-secondary text-primary rounded">{{ $competition->tickets_count }}</div>
             </li>
         </ul>
-        <div class="p-3 bg-primary-800 rounded">
+        <div class="p-3 bg-gray-800 rounded">
             <div class="w-[25%] p-1 bg-secondary rounded"></div>
         </div>
     </div>
-    <a href="#" class="block p-4 bg-secondary text-primary text-center font-semibold rounded-b">Enter competition</a>
+    <x-button href="#" label="Enter Competition" xl secondary class="w-full" />
 </div>

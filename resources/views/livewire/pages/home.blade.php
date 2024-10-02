@@ -12,32 +12,24 @@ new
 class extends Component
 {
     /**
-     * @var Collection
+     * @return array
      */
-    public Collection $competitions;
-
-    /**
-     * @return void
-     */
-    public function mount(): void
+    public function with(): array
     {
-        $this->competitions = Competition::query()
-            ->active()
-            ->withCount([
+        return [
+            'competitions' => Competition::active()->withCount([
                 'tickets',
                 'tickets as instant_win_tickets_count' => fn ($query) => $query->instantWin(),
-            ])
-            ->orderBy('created_at', 'DESC')
-            ->limit(3)
-            ->get();
+            ])->orderBy('created_at', 'DESC')->limit(3)->get(),
+        ];
     }
 }
 ?>
 
 <div>
-    <div class="relative h-[350px] bg-secondary overflow-hidden text-primary">
+    <div class="relative h-[350px] bg-secondary overflow-hidden text-black">
         <div class="relative h-full container">
-            <div class="absolute top-[2rem] right-[16rem] w-[26rem] h-[26rem] bg-primary rounded-full z-0" style="background-position: 25% -83%; background-size: 90%; transform: translate(50%, -50%);"></div>
+            <div class="absolute top-[2rem] right-[16rem] w-[26rem] h-[26rem] bg-black rounded-full z-0" style="background-position: 25% -83%; background-size: 90%; transform: translate(50%, -50%);"></div>
             <div class="absolute top-[2rem] right-[16rem] w-[22rem] h-[22rem] rounded-full border-[25px] border-secondary" style="transform: translate(50%, -50%);"></div>
             <div class="absolute top-[2rem] right-[16rem] w-[14rem] h-[14rem] rounded-full border-[25px] border-secondary" style="transform: translate(50%, -50%);"></div>
             <div class="flex max-w-[450px] h-full py-16">

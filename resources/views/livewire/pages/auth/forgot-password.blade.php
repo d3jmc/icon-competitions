@@ -50,6 +50,6 @@ class extends Component
     
     <form wire:submit="sendPasswordResetLink" class="flex flex-col gap-4">
         <x-input wire:model="email" type="email" label="Email" required />
-        <x-button type="submit" label="Email password reset link" />
+        <x-button type="submit" label="Email password reset link" lg primary spinner />
     </form>
 </div>

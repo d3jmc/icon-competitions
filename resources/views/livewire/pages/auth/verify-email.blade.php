@@ -39,6 +39,6 @@ class extends Component
 
     <x-page-header title="Verify your email" subtitle="Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another." />
 
-    <x-button wire:click="sendVerification" label="Resend Verification Email" />
-    <x-button wire:click="logout" label="Logout" />
+    <x-button wire:click="sendVerification" label="Resend Verification Email" lg primary spinner />
+    <x-button wire:click="logout" label="Logout" lg primary spinner />
 </div>

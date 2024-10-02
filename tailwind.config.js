@@ -22,8 +22,18 @@ export default {
     },
     extend: {
       colors: {
-        // primary: '#000000',
-        // secondary: '#fcd34d',
+        secondary: {
+          DEFAULT: '#f2af29',
+          100: '#352403',
+          200: '#6a4906',
+          300: '#9f6d09',
+          400: '#d4910c',
+          500: '#f2af29',
+          600: '#f5be51',
+          700: '#f7cf7d',
+          800: '#fadfa8',
+          900: '#fcefd4'
+        }
       },
     },
     fontFamily: {

@@ -43,16 +43,16 @@ class extends Component
         <x-input wire:model="email" type="email" label="Email" required />    
         <x-input wire:model="password" type="password" label="Password" required />
         <x-checkbox wire:model="remember" label="Remember me" />
-        <x-button type="submit">Log in</x-button>
+        <x-button type="submit" label="Log in" lg primary spinner />
     </form>
 
     <div class="flex justify-center gap-4">
         @if (Route::has('password.request'))
-            <x-link wire:navigate label="Forgot password?" href="{{ route('password.request') }}" />
+            <x-link wire:navigate label="Forgot password?" href="{{ route('password.request') }}" class="!font-normal" />
         @endif
 
         @if (Route::has('register'))
-            <x-link wire:navigate label="Create an account" href="{{ route('register') }}" />
+            <x-link wire:navigate label="Create an account" href="{{ route('register') }}" class="!font-normal" />
         @endif
     </div>
 </div>

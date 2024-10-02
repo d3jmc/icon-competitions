@@ -18,7 +18,10 @@ class Login
      */
     public function handle(string $email, #[SensitiveParameter] string $password, bool $remember = false): void
     {
-        if (!Auth::attempt(['email' => $email, 'password' => $password], $remember)) {
+        if (!Auth::attempt([
+            'email' => $email,
+            'password' => $password,
+        ], $remember)) {
             throw ValidationException::withMessages([
                 'email' => __('auth.failed'),
             ]);

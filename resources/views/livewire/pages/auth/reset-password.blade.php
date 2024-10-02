@@ -1,10 +1,7 @@
 <?php
 
 use App\Actions\Auth\ResetPassword;
-use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Title;
@@ -45,7 +42,7 @@ class extends Component
     {
         $this->validate();
 
-        $action = new ResetPassword();
+        $action = new ResetPassword;
         $action->handle($this->email, $this->password, $this->token);
 
         $status = $action->getStatus();
@@ -75,6 +72,6 @@ class extends Component
         <x-input wire:model="email" type="email" label="Email" disabled readonly required />
         <x-input wire:model="password" type="password" label="Password" required />
         <x-input wire:model="password_confirmation" type="password" label="Confirm Password" required />
-        <x-button type="submit" label="Reset password" />
+        <x-button type="submit" label="Reset password" lg primary spinner />
     </form>
 </div>

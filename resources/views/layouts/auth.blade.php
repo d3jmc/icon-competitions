@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="hidden xl:block sticky top-0 h-screen bg-secondary overflow-hidden">
-                <div class="absolute top-[2rem] right-[6rem] w-[26rem] h-[26rem] bg-primary rounded-full z-0" style="background-position: 25% -83%; background-size: 90%; transform: translate(50%, -50%);"></div>
+                <div class="absolute top-[2rem] right-[6rem] w-[26rem] h-[26rem] bg-black rounded-full z-0" style="background-position: 25% -83%; background-size: 90%; transform: translate(50%, -50%);"></div>
                 <div class="absolute top-[2rem] right-[6rem] w-[22rem] h-[22rem] rounded-full border-[25px] border-secondary" style="transform: translate(50%, -50%);"></div>
                 <div class="absolute top-[2rem] right-[6rem] w-[14rem] h-[14rem] rounded-full border-[25px] border-secondary" style="transform: translate(50%, -50%);"></div>
                 <div class="flex h-full p-16">

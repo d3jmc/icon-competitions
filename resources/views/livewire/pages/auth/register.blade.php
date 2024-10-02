@@ -61,12 +61,12 @@ class extends Component
         <x-input wire:model="password" type="password" label="Password" required />
         <x-input wire:model="password_confirmation" type="password" label="Confirm Password" required />
         <x-checkbox wire:model="terms" label="I agree to the terms and conditions and privacy policy." required />
-        <x-button type="submit">Register</x-button>
+        <x-button type="submit" label="Register" lg primary spinner />
     </form>
 
     <div class="flex justify-center gap-4">
         @if (Route::has('login'))
-            <x-link wire:navigate label="Already have an account?" href="{{ route('login') }}" />
+            <x-link wire:navigate label="Already have an account?" href="{{ route('login') }}" class="!font-normal" />
         @endif
     </div>
 </div>

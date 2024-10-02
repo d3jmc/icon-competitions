@@ -14,23 +14,23 @@
 
         @vite('resources/css/app.css')
     </head>
-    <body class="font-body bg-primary text-white">
-        <header class="sticky top-0 z-10 py-4 bg-primary border-b-4 border-secondary">
+    <body class="font-body bg-black text-white">
+        <header class="sticky top-0 z-10 py-4 bg-black border-b-4 border-secondary">
             <div class="flex justify-between items-center gap-8 container">
                 <a class="flex" href="{{ route('home') }}" wire:navigate>
                     <x-application-logo fill="white" />
                 </a>
                 <nav class="flex items-center gap-8">
-                    <a href="{{ route('competitions') }}" class="font-medium" wire:navigate>Live Competitions</a>
-                    <a href="{{ route('past-competitions') }}" class="font-medium" wire:navigate>Past Competitions</a>
-                    <a href="{{ route('about') }}" class="font-medium" wire:navigate>About</a>
-                    <a href="{{ route('faqs') }}" class="font-medium" wire:navigate>FAQs</a>
+                    <x-link wire:navigate label="Live Competitions" href="{{ route('competitions') }}" class="!font-normal" />
+                    <x-link wire:navigate label="Past Competitions" href="{{ route('past-competitions') }}" class="!font-normal" />
+                    <x-link wire:navigate label="About" href="{{ route('about') }}" class="!font-normal" />
+                    <x-link wire:navigate label="FAQs" href="{{ route('faqs') }}" class="!font-normal" />
                     <div class="flex gap-4">
                         @if (auth()->user())
-                            <a href="{{ route('account') }}" class="font-medium py-2 px-4 bg-secondary text-primary border border-secondary rounded" wire:navigate>Account &rightarrow;</a>
+                            <x-button href="{{ route('account') }}" label="Account" secondary />
                         @else
-                            <a href="{{ route('register') }}" class="font-medium py-2 px-4 border border-secondary rounded" wire:navigate>Sign up</a>
-                            <a href="{{ route('login') }}" class="font-medium py-2 px-4 bg-secondary text-primary border border-secondary rounded" wire:navigate>Log in &rightarrow;</a>
+                            <x-button href="{{ route('register') }}" label="Sign up" secondary outline />
+                            <x-button href="{{ route('login') }}" label="Sign in" right-icon="arrow-right" secondary class="!text-black" />
                         @endif
                     </div>
                 </nav>

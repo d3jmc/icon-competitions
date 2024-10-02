@@ -3,6 +3,7 @@
 namespace App\Pipelines\TicketGeneration;
 
 use App\Enums\TicketType;
+use App\Exceptions\NoPrizesForTicketType;
 use App\Models\Competition;
 use App\Models\Prize;
 use App\Models\Ticket;
@@ -18,7 +19,9 @@ class AssignPrizesToTickets
      */
     public function handle(Competition $competition, Closure $next): Competition
     {
-        $competition->tickets->each(fn (Ticket $ticket) => $this->assignPrize($ticket));
+        $competition->tickets
+                    ->where('type', '!=', TicketType::STANDARD)
+                    ->each(fn (Ticket $ticket) => $this->assignPrize($ticket));
 
         return $next($competition);
     }
@@ -30,32 +33,35 @@ class AssignPrizesToTickets
      */
     private function assignPrize(Ticket $ticket): void
     {
-        $attributes = [];
+        try {
+            $prize = $this->getRandomPrize($ticket->competition, $ticket->type);
 
-        if ($prize = $this->getRandomPrize($ticket->competition, $ticket->type)) {
-            $attributes['prize_id'] = $prize->id;
-        } else {
-            $attributes['type'] = TicketType::STANDARD;
+            $ticket->update([
+                'prize_id' => $prize->id,
+            ]);
+        } catch (NoPrizesForTicketType) {
+            $ticket->update([
+                'type' => TicketType::STANDARD,
+            ]);
         }
-
-        $ticket->update($attributes);
     }
 
     /**
      * @param  Competition $competition
      * @param  TicketType  $ticketType
      *
-     * @return Prize|null
+     * @return Prize
      */
-    private function getRandomPrize(Competition $competition, TicketType $ticketType): ?Prize
+    private function getRandomPrize(Competition $competition, TicketType $ticketType): Prize
     {
         $prizes = $competition->prizes()->assignable()->forTicketType($ticketType)->get();
         
         if ($prizes->count() == 0) {
-            return null;
+            throw new NoPrizesForTicketType('No prizes available for this ticket type.');
         }
 
         $prize = $prizes->random();
+
         $prize->update([
             'assigned' => ($prize->assigned + 1),
         ]);

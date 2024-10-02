@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
             ]);
             
         Competition::factory()
-            ->count(3)
+            ->count(1)
             ->has(Prize::factory(3))
             ->create()
             ->each(fn(Competition $competition) => $this->generateTickets->handle($competition));

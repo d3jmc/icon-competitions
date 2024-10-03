@@ -14,6 +14,17 @@ class Prize extends Model
     use HasFactory, SoftDeletes;
 
     /**
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'credit',
+        'available',
+        'assigned',
+        'assign_to_ticket_type',
+    ];
+
+    /**
      * @return array
      */
     protected function casts(): array

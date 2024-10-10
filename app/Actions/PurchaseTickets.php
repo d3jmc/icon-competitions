@@ -14,13 +14,14 @@ use Illuminate\Pipeline\Pipeline;
 class PurchaseTickets
 {
     /**
-     * @param  User         $user
-     * @param  Competition  $competition
-     * @param  int          $amount
+     * @param  User               $user
+     * @param  Competition        $competition
+     * @param  int                $amount
+     * @param  bool               $charge
      *
      * @return PurchaseTicketsDto
      */
-    public function handle(User $user, Competition $competition, int $amount): PurchaseTicketsDto
+    public function handle(User $user, Competition $competition, int $amount, bool $charge = true): PurchaseTicketsDto
     {
         $dto = new PurchaseTicketsDto([
             'user' => $user,
@@ -28,14 +29,19 @@ class PurchaseTickets
             'amount' => $amount,
         ]);
 
+        $steps = [
+            ReserveTickets::class,
+            ClaimTickets::class,
+        ];
+
+        if ($charge) {
+            array_splice($steps, 0, 0, CheckUserBalance::class);
+            array_splice($steps, 2, 0, TakePayment::class);
+        }
+
         return app(Pipeline::class)
             ->send($dto)
-            ->through([
-                CheckUserBalance::class,
-                ReserveTickets::class,
-                TakePayment::class,
-                ClaimTickets::class,
-            ])
+            ->through($steps)
             ->thenReturn();
     }
 }

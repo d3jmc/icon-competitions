@@ -4,7 +4,6 @@ use App\Actions\Auth\Register;
 use App\Models\User;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
-use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 
 new
@@ -12,35 +11,43 @@ new
 #[Title('Register for an account')]
 class extends Component
 {
-    #[Validate('required|string')]
     public string $prefix = '';
     
-    #[Validate('required|string')]
     public string $first_name = '';
 
-    #[Validate('required|string')]
     public string $last_name = '';
 
-    #[Validate('required|string|email|lowercase|unique:' . User::class)]
     public string $email = '';
 
-    #[Validate('required|string|unique:' . User::class)]
     public string $mobile_number = '';
 
-    #[Validate('required|string|confirmed')]
     public string $password = '';
 
     public string $password_confirmation = '';
 
-    #[Validate('boolean')]
     public bool $terms = false;
+
+    protected function rules(): array
+    {
+        return [
+            'prefix' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|string|email|lowercase|unique:' . User::class,
+            'mobile_number' => 'required|string|unique:' . User::class,
+            'password' => 'required|string|confirmed',
+            'terms' => 'accepted',
+        ];
+    }
 
     /**
      * @return void
      */
     public function register(): void
     {
-        (new Register)->handle($this->validate());
+        $validated = $this->validate();
+
+        (new Register)->handle($validated);
 
         $this->redirectIntended(default: route('account', absolute: false), navigate: true);
     }

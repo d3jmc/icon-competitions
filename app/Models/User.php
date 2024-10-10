@@ -6,7 +6,10 @@ use App\Enums\Honorific;
 use App\Enums\UserRole;
 use App\Traits\HasAddress;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -27,6 +30,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'mobile_number',
         'password',
+        'last_login_at',
+        'last_login_ip',
     ];
 
     /**
@@ -60,5 +65,63 @@ class User extends Authenticatable implements MustVerifyEmail
                 $model->createOrGetStripeCustomer();
             }
         });
+    }
+
+    /**
+     * @return Attribute
+     */
+    protected function fullName(): Attribute
+    {
+        return new Attribute(function ($value) {
+            return "{$this->prefix->value} {$this->first_name} {$this->last_name}";
+        });
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    /**
+     * @return Ticket|null
+     */
+    public function latestTicket(): ?Ticket
+    {
+        return $this->tickets()->latest()->first();
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function instantWins(): HasMany
+    {
+        return $this->tickets()->instantWin($this->id);
+    }
+
+    /**
+     * @return Ticket|null
+     */
+    public function latestInstantWin(): ?Ticket
+    {
+        return $this->instantWins()->latest()->first();
+    }
+
+    /**
+     * @return HasManyThrough
+     */
+    public function competitions(): HasManyThrough
+    {
+        return $this->hasManyThrough(Competition::class, Ticket::class, 'id', 'id');
+    }
+
+    /**
+     * @return Competition|null
+     */
+    public function latestCompetition(): ?Competition
+    {
+        return $this->competitions()->latest()->first();
     }
 }

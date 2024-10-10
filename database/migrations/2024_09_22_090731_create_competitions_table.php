@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('competitions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug')->unique();
             $table->longText('description');
             $table->string('thumbnail');
             $table->timestamp('start_date');

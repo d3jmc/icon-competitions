@@ -3,7 +3,6 @@
 use App\Actions\Auth\Login;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
-use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 
 new
@@ -11,14 +10,23 @@ new
 #[Title('Login to your account')]
 class extends Component
 {
-    #[Validate('required|email')]
     public string $email = '';
 
-    #[Validate('required|string')]
     public string $password = '';
 
-    #[Validate('boolean')]
     public bool $remember = false;
+
+    /**
+     * @return array
+     */
+    protected function rules(): array
+    {
+        return [
+            'email' => 'required|email',
+            'password' => 'required|string',
+            'remember' => 'boolean',
+        ];
+    }
 
     /**
      * @return void

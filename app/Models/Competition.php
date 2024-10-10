@@ -5,8 +5,8 @@ namespace App\Models;
 use App\Enums\CompetitionStatus;
 use App\Events\CompetitionEnded;
 use App\Events\CompetitionStarted;
-use App\Exceptions\HandleCompetitionException;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,6 +18,7 @@ class Competition extends Model
 
     protected $fillable = [
         'name',
+        'slug',
         'description',
         'thumbnail',
         'start_date',
@@ -44,14 +45,52 @@ class Competition extends Model
     }
 
     /**
+     * @return Attribute
+     */
+    protected function ticketPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn (float $value) => number_format($value, 2),
+        );
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDraft(): bool
+    {
+        return ($this->status === CompetitionStatus::DRAFT);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isScheduled(): bool
+    {
+        return ($this->status === CompetitionStatus::SCHEDULED);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return ($this->status === CompetitionStatus::ACTIVE);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFinished(): bool
+    {
+        return ($this->status === CompetitionStatus::FINISHED);
+    }
+
+    /**
      * @return void
      */
     public function start(): void
     {
-        if ($this->status !== CompetitionStatus::SCHEDULED) {
-            throw new HandleCompetitionException('The competition must be scheduled before starting.');
-        }
-
         $this->update([
             'started_on' => now(),
             'status' => CompetitionStatus::ACTIVE,
@@ -65,16 +104,20 @@ class Competition extends Model
      */
     public function end(): void
     {
-        if ($this->status !== CompetitionStatus::ACTIVE) {
-            throw new HandleCompetitionException('The competition must be active before ending.');
-        }
-
         $this->update([
             'ended_on' => now(),
             'status' => CompetitionStatus::FINISHED,
         ]);
         
         event(new CompetitionEnded($this));
+    }
+
+    /**
+     * @return int
+     */
+    public function percentageOfClaimedTickets(): int
+    {
+        return round(($this->tickets()->claimed()->count() / $this->max_tickets) * 100);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\CompetitionStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Competition>
@@ -19,8 +20,11 @@ class CompetitionFactory extends Factory
     {
         return [
             'name' => fake()->sentence(),
+            'slug' => function (array $attributes) {
+                return Str::slug($attributes['name']);
+            },
             'description' => fake()->paragraph(),
-            'thumbnail' => 'https://placehold.it/100x100',
+            'thumbnail' => 'https://lancashirecompetitions.com/wp-content/uploads/2024/11/IMG_7077.jpg',
             'start_date' => now()->addHour(),
             'end_date' => now()->addDay(14),
             'ticket_price' => fake()->randomFloat(2, 0, 2),

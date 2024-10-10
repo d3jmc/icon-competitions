@@ -4,7 +4,6 @@ use App\Actions\Auth\SendPasswordResetLink;
 use Illuminate\Support\Facades\Password;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
-use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 
 new
@@ -12,8 +11,14 @@ new
 #[Title('Forgot Password')]
 class extends Component
 {
-    #[Validate('required|string|email')]
     public string $email = '';
+
+    protected function rules(): array
+    {
+        return [
+            'email' => 'required|string|email',
+        ];
+    }
 
     /**
      * @return void

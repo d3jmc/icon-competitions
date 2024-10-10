@@ -95,23 +95,29 @@ class Ticket extends Model
     }
 
     /**
-     * @param  Builder $query
+     * @param  Builder  $query
+     * @param  int|null $userId
      *
      * @return void
      */
-    public function scopeStandard(Builder $query): void
+    public function scopeStandard(Builder $query, ?int $userId = null): void
     {
-        $query->where('type', TicketType::STANDARD);
+        $query->when($userId, function (Builder $query, int $userId) {
+            $query->where('user_id', $userId);
+        })->where('type', TicketType::STANDARD);
     }
 
     /**
-     * @param  Builder $query
+     * @param  Builder  $query
+     * @param  int|null $userId
      *
      * @return void
      */
-    public function scopeInstantWin(Builder $query): void
+    public function scopeInstantWin(Builder $query, ?int $userId = null): void
     {
-        $query->where('type', TicketType::INSTANT_WIN);
+        $query->when($userId, function (Builder $query, int $userId) {
+            $query->where('user_id', $userId);
+        })->where('type', TicketType::INSTANT_WIN);
     }
 
     /**

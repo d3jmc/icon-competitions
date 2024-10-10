@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Password;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Title;
-use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 
 new
@@ -16,13 +15,22 @@ class extends Component
     #[Locked]
     public string $token = '';
 
-    #[Validate('required|string|email')]
     public string $email = '';
     
-    #[Validate('required|string|confirmed')]
     public string $password = '';
 
     public string $password_confirmation = '';
+
+    /**
+     * @return array
+     */
+    protected function rules(): array
+    {
+        return [
+            'email' => 'required|string|email',
+            'password' => 'required|string|confirmed',
+        ];
+    }
 
     /**
      * @param string $token

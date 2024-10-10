@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Promotion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -9,7 +10,7 @@ require __DIR__ . '/auth.php';
 Route::get('/test', function () {
     $user = Auth::user();
 
-    dd($user->instantWins()->get());
+    dd(Promotion::active()->signUps()->latest());
 });
 
 Volt::route('/', 'pages.home')->name('home');

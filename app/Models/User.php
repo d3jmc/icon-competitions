@@ -56,18 +56,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return void
-     */
-    protected static function booted(): void
-    {
-        static::updated(function (self $model) {
-            if ($model->hasVerifiedEmail() && !$model->stripe_id) {
-                $model->createOrGetStripeCustomer();
-            }
-        });
-    }
-
-    /**
      * @return Attribute
      */
     protected function fullName(): Attribute

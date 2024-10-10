@@ -1,7 +1,9 @@
 <?php
 
 use App\Actions\Auth\Logout;
+use App\Events\UserVerified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 

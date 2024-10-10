@@ -35,11 +35,11 @@ class extends Component
             ],
             [
                 'title' => 'Last Logged In',
-                'value' => $this->user->last_login_at,
+                'value' => $this->user->last_login_at ?? 'Unknown',
             ],
             [
                 'title' => 'Wallet Balance',
-                'value' => $this->user->balance(),
+                'value' => $this->user->balance() ?? 0,
             ],
             [
                 'title' => 'Competitions Entered',

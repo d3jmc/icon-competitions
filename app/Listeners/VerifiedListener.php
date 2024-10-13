@@ -2,9 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Models\Promotion;
 use Illuminate\Auth\Events\Verified;
-use Illuminate\Support\Facades\Log;
 
 class VerifiedListener
 {
@@ -20,10 +18,6 @@ class VerifiedListener
 
         if (!$user->stripe_id) {
             $user->createOrGetStripeCustomer();
-        }
-
-        if ($promotion = Promotion::active()->signUps()->latest()->first()) {
-            $promotion->trigger($event->user);
         }
     }
 }

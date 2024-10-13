@@ -7,12 +7,6 @@ use Livewire\Volt\Volt;
 
 require __DIR__ . '/auth.php';
 
-Route::get('/test', function () {
-    $user = Auth::user();
-
-    dd(Promotion::active()->signUps()->latest());
-});
-
 Volt::route('/', 'pages.home')->name('home');
 Volt::route('competition/{competition:slug}', 'pages.competition.show')->name('competition.show');
 Volt::route('terms-conditions', 'pages.terms')->name('terms');

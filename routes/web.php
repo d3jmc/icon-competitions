@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Promotion;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 

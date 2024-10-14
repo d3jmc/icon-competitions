@@ -13,7 +13,7 @@ class EndCompetitions extends Command
      *
      * @var string
      */
-    protected $signature = 'competition:end {--ids=}';
+    protected $signature = 'app:end-competition {--ids=}';
 
     /**
      * The console command description.

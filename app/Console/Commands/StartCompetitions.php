@@ -13,7 +13,7 @@ class StartCompetitions extends Command
      *
      * @var string
      */
-    protected $signature = 'competition:start {--ids=?}';
+    protected $signature = 'app:start-competition {--ids=?}';
 
     /**
      * The console command description.

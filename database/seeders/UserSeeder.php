@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Enums\UserRole;
 use App\Models\Address;
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -16,6 +17,7 @@ class UserSeeder extends Seeder
     {
         User::factory()
             ->has(Address::factory())
+            ->has(Wallet::factory())
             ->create([
                 'role' => UserRole::SUPER_ADMIN,
                 'prefix' => 'Mr',
@@ -30,6 +32,7 @@ class UserSeeder extends Seeder
 
         User::factory()
             ->has(Address::factory())
+            ->has(Wallet::factory())
             ->create([
                 'role' => UserRole::MEMBER,
                 'prefix' => 'Mr',

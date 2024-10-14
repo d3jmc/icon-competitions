@@ -76,6 +76,8 @@ class Ticket extends Model
             'status' => TicketStatus::CLAIMED,
             'claimed_on' => now(),
         ]);
+
+        // @todo - check if ticket has prize credit and award to wallet
     }
 
     /**

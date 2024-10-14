@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -60,9 +61,17 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected function fullName(): Attribute
     {
-        return new Attribute(function ($value) {
-            return "{$this->prefix->value} {$this->first_name} {$this->last_name}";
-        });
+        return Attribute::make(
+            get: fn ($value) => "{$this->prefix->value} {$this->first_name} {$this->last_name}",
+        );
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function wallet(): HasOne
+    {
+        return $this->hasOne(Wallet::class);
     }
 
     /**

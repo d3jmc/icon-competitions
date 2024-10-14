@@ -32,7 +32,7 @@
 
             <div class="flex gap-4">
                 @if (auth()->user())
-                    <x-button wire:navigate href="#" label="{{ auth()->user()->balance() }}" secondary outline icon="banknotes" />
+                    <x-button wire:navigate href="#" label="£{{ auth()->user()->wallet->balance }}" secondary outline icon="banknotes" />
                     <x-button wire:navigate href="{{ route('account') }}" label="My Account" primary right-icon="arrow-right" />
                 @else
                     <x-button wire:navigate href="{{ route('register') }}" label="Sign up" secondary outline />

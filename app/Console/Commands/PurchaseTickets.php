@@ -15,7 +15,7 @@ class PurchaseTickets extends Command
      *
      * @var string
      */
-    protected $signature = 'competition:purchase-tickets {competition} {amount} {user} {--charge}';
+    protected $signature = 'app:purchase-tickets {competition} {amount} {user} {--charge}';
 
     /**
      * The console command description.

@@ -35,23 +35,10 @@ class PurchaseTicketsDto extends DataTransferObject
     public float $totalPrice = 0;
 
     /**
-     * @var float
-     */
-    public float $totalPriceForStripe = 0;
-
-    /**
      * @return void
      */
     public function setTotalPrice(): void
     {
         $this->totalPrice = ($this->competition->ticket_price * $this->amount);
-    }
-
-    /**
-     * @return void
-     */
-    public function setTotalPriceForStripe(): void
-    {
-        $this->totalPriceForStripe = ($this->totalPrice * 100);
     }
 }

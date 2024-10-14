@@ -15,7 +15,7 @@ class TakePayment
      */
     public function handle(PurchaseTicketsDto $dto, Closure $next): PurchaseTicketsDto
     {
-        $dto->user->creditBalance($dto->totalPriceForStripe, "Purchase of {$dto->amount} ticket(s).");
+        $dto->user->wallet->withdraw($dto->totalPrice, "Purchase of {$dto->amount} ticket(s).", ['ticket_ids' => $dto->tickets->pluck('id')->toArray()]);
 
         return $next($dto);
     }

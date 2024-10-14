@@ -19,5 +19,9 @@ class VerifiedListener
         if (!$user->stripe_id) {
             $user->createOrGetStripeCustomer();
         }
+
+        if (!$user->wallet) {
+            $user->wallet()->create();
+        }
     }
 }

@@ -39,7 +39,7 @@ class extends Component
             ],
             [
                 'title' => 'Wallet Balance',
-                'value' => $this->user->balance() ?? 0,
+                'value' => '£' . $this->user->wallet->balance ?? 0,
             ],
             [
                 'title' => 'Competitions Entered',

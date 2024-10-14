@@ -6,21 +6,21 @@ use App\Models\User;
 use Exception;
 use Illuminate\Console\Command;
 
-class CreditBalance extends Command
+class Withdraw extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'stripe:debit-balance {userId} {amount} {--description=}';
+    protected $signature = 'app:withdraw {userId} {amount} {--description=}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Debit a user`\s Stripe balance with the specified amount.';
+    protected $description = 'Make a withdrawal from a user`\s wallet with the specified amount.';
 
     /**
      * Execute the console command.
@@ -33,9 +33,9 @@ class CreditBalance extends Command
         $user = User::findOrFail($this->argument('userId'));
         
         try {
-            $user->debitBalance((int) ($this->argument('amount') * 100), $this->option('description') ?? 'Balance debited by the system');
+            $user->wallet->withdraw($this->argument('amount'), $this->option('description') ?? 'Withdrawal made by the system');
 
-            $this->info('The user\'s balance has been debited successfully.');
+            $this->info('The withdrawl has been made from the user\'s balance.');
         } catch (Exception $e) {
             $this->error($e->getMessage());
         }
